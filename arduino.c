@@ -1,5 +1,7 @@
 #include "libs/randgen.h"
+#include "libs/stack.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void test_random_generation() {
   int total_bullets, live_bullets, blanks;
@@ -16,5 +18,12 @@ void test_random_generation() {
 
 int main(void) {
   setup_randgen();
-  test_random_generation();
+
+  BulletStack stack;
+  stack.bullets = (BulletKind *)malloc(sizeof(BulletKind) * 6);
+  stack_init_rand(&stack, 5, 1);
+
+  stack_print(&stack);
+
+  free(stack.bullets);
 }
