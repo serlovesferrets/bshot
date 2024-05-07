@@ -1,6 +1,8 @@
 #include "bullet_kind.h"
 #include <stdbool.h>
 
+#define MAX_STACK_SIZE 6
+
 // A stack of bullets.
 typedef struct {
   // The actual size of the stack, also the element that's going to get popped.

@@ -20,7 +20,7 @@ int main(void) {
   setup_randgen();
 
   BulletStack stack;
-  stack.bullets = (BulletKind *)malloc(sizeof(BulletKind) * 6);
+  stack.bullets = (BulletKind *)malloc(sizeof(BulletKind) * MAX_STACK_SIZE);
   stack_init_rand(&stack, 3, 2);
 
   stack_print(&stack);

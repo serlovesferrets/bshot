@@ -3,10 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 6
 
 void stack_init_empty(BulletStack *stack) {
-  stack->max_size = MAX_SIZE;
+  stack->max_size = MAX_STACK_SIZE;
 
   stack->size = 0;
   for (int i = 0; i < stack->max_size; i++) {
@@ -15,9 +14,9 @@ void stack_init_empty(BulletStack *stack) {
 }
 
 void stack_init_rand(BulletStack *stack, int live_bullets, int blanks) {
-  assert(live_bullets + blanks <= MAX_SIZE);
+  assert(live_bullets + blanks <= MAX_STACK_SIZE);
 
-  stack->max_size = MAX_SIZE;
+  stack->max_size = MAX_STACK_SIZE;
 
   int total_bullets = live_bullets + blanks;
   stack->size = total_bullets;
