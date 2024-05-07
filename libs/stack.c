@@ -1,8 +1,9 @@
 #include "stack.h"
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 6;
+#define MAX_SIZE 6
 
 void stack_init_empty(BulletStack *stack) {
   stack->max_size = MAX_SIZE;
@@ -14,6 +15,8 @@ void stack_init_empty(BulletStack *stack) {
 }
 
 void stack_init_rand(BulletStack *stack, int live_bullets, int blanks) {
+  assert(live_bullets + blanks <= MAX_SIZE);
+
   stack->max_size = MAX_SIZE;
 
   int total_bullets = live_bullets + blanks;
@@ -61,16 +64,20 @@ void stack_init_rand(BulletStack *stack, int live_bullets, int blanks) {
 }
 
 BulletKind stack_pop(BulletStack *stack) {
+  assert(!stack_is_empty(stack));
+
   const int index = stack->size;
   const BulletKind bullet = stack->bullets[index];
 
   stack->size--;
-  stack->bullets[index] = EMPTY;
+  stack->bullets[index - 1] = EMPTY;
 
   return bullet;
 }
 
 void stack_push(BulletStack *stack, BulletKind bullet) {
+  assert(stack->size != stack->max_size);
+
   stack->size++;
   stack->bullets[stack->size] = bullet;
 }
@@ -80,17 +87,19 @@ bool stack_is_empty(BulletStack *stack) { return stack->size == 0; }
 void stack_print(BulletStack *stack) {
   printf("Size: %d (Max: %d)\n", stack->size, stack->max_size);
 
+  const int max_size = stack->max_size;
+
   int i = 0;
   for (; i < stack->size; i++) {
     switch (stack->bullets[i]) {
     case LIVE:
-      printf("%d. live bullet\n", i + 1);
+      printf("%d. live bullet\n", max_size - i);
       break;
     case BLANK:
-      printf("%d. blank\n", i + 1);
+      printf("%d. blank\n", max_size - i);
       break;
     case EMPTY:
-      printf("empty at %d, this shouldn't be happening!\n", i + 1);
+      printf("empty at %d, this shouldn't be happening!\n", max_size - i);
       break;
     }
   }
@@ -104,10 +113,10 @@ void stack_print(BulletStack *stack) {
     case LIVE:
     case BLANK:
       printf("live or blank bullet at %d, this shouldn't be happening!\n",
-             i + 1);
+             max_size - i);
       break;
     case EMPTY:
-      printf("%d. empty spot\n", i + 1);
+      printf("%d. empty spot\n", max_size - i);
       break;
     }
   }

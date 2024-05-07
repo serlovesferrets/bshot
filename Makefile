@@ -3,7 +3,7 @@ PROJ_DIR := .
 
 SRCS := $(shell find $(PROJ_DIR) -name '*.c') 
 
-TARGET_EXEC := arduino
+TARGET_EXEC := run
 
 make:
 	@mkdir -p build

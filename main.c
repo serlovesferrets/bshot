@@ -21,7 +21,12 @@ int main(void) {
 
   BulletStack stack;
   stack.bullets = (BulletKind *)malloc(sizeof(BulletKind) * 6);
-  stack_init_rand(&stack, 5, 1);
+  stack_init_rand(&stack, 3, 2);
+
+  stack_print(&stack);
+
+  stack_pop(&stack);
+  stack_pop(&stack);
 
   stack_print(&stack);
 
