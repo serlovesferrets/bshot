@@ -1,14 +1,17 @@
 BUILD_DIR := ./build
 PROJ_DIR := .
-LIBS_DIR := $(PROJ_DIR)/libs
+
+SRCS := $(shell find $(PROJ_DIR) -name '*.c') 
+
+TARGET_EXEC := arduino
 
 make:
 	@mkdir -p build
-	clang -o $(BUILD_DIR)/main $(PROJ_DIR)/arduino.c $(LIBS_DIR)/randgen.c
+	clang -o $(BUILD_DIR)/$(TARGET_EXEC) $(SRCS)
 
 run: 
 	@make
-	$(BUILD_DIR)/main
+	$(BUILD_DIR)/$(TARGET_EXEC)
 
 clean:
 	rm -rf $(BUILD_DIR)
