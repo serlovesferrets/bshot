@@ -42,9 +42,6 @@ void stack_init_rand(BulletStack *stack, int live_bullets, int blanks) {
       }
     }
 
-    // if (blanks == 0 || live_bullets == 0) {
-    //   break;
-    // }
     stack->bullets[i] = bullet;
   }
 
@@ -62,6 +59,23 @@ void stack_init_rand(BulletStack *stack, int live_bullets, int blanks) {
     stack->bullets[i] = EMPTY;
   }
 }
+
+BulletKind stack_pop(BulletStack *stack) {
+  const int index = stack->size;
+  const BulletKind bullet = stack->bullets[index];
+
+  stack->size--;
+  stack->bullets[index] = EMPTY;
+
+  return bullet;
+}
+
+void stack_push(BulletStack *stack, BulletKind bullet) {
+  stack->size++;
+  stack->bullets[stack->size] = bullet;
+}
+
+bool stack_is_empty(BulletStack *stack) { return stack->size == 0; }
 
 void stack_print(BulletStack *stack) {
   printf("Size: %d (Max: %d)\n", stack->size, stack->max_size);
