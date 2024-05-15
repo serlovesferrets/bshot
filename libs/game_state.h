@@ -20,6 +20,4 @@ typedef enum { PRESERVE_LIVES, NO_OPTS } ResetStateOpts;
 
 void reset_game_state(GameState *state, ResetStateOpts options);
 
-void free_game_state(GameState *state);
-
 void toggle_turn(GameState *state);
