@@ -8,3 +8,7 @@ void setup_randgen();
   Note: you MUST call `setup_randgen()` first.
 */
 int randint(int lower_bound, int upper_bound);
+
+int rand_size();
+
+int rand_live_bullets(int size);

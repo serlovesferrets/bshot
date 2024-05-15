@@ -4,18 +4,14 @@
 #include <stdlib.h>
 
 void stack_init_empty(BulletStack *stack) {
-    stack->max_size = MAX_STACK_SIZE;
-
     stack->size = 0;
-    for (int i = 0; i < stack->max_size; i++) {
-        stack->bullets[i] = EMPTY;
+    for (int i = 0; i < MAX_B_STACK_SIZE; i++) {
+        stack->bullets_list[i] = EMPTY;
     }
 }
 
 void stack_init_rand(BulletStack *stack, int live_bullets, int blanks) {
-    assert(live_bullets + blanks <= MAX_STACK_SIZE);
-
-    stack->max_size = MAX_STACK_SIZE;
+    assert(live_bullets + blanks <= MAX_B_STACK_SIZE);
 
     int total_bullets = live_bullets + blanks;
     stack->size = total_bullets;
@@ -41,21 +37,21 @@ void stack_init_rand(BulletStack *stack, int live_bullets, int blanks) {
             }
         }
 
-        stack->bullets[i] = bullet;
+        stack->bullets_list[i] = bullet;
     }
 
     for (; live_bullets > 0; live_bullets--) {
-        stack->bullets[i] = LIVE;
+        stack->bullets_list[i] = LIVE;
         i++;
     }
 
     for (; blanks > 0; blanks--) {
-        stack->bullets[i] = BLANK;
+        stack->bullets_list[i] = BLANK;
         i++;
     }
 
-    for (; i < stack->max_size; i++) {
-        stack->bullets[i] = EMPTY;
+    for (; i < MAX_B_STACK_SIZE; i++) {
+        stack->bullets_list[i] = EMPTY;
     }
 }
 
@@ -63,57 +59,57 @@ BulletKind stack_pop(BulletStack *stack) {
     assert(!stack_is_empty(stack));
 
     const int index = stack->size;
-    const BulletKind bullet = stack->bullets[index];
+    const BulletKind bullet = stack->bullets_list[index - 1];
 
     stack->size--;
-    stack->bullets[index - 1] = EMPTY;
+    stack->bullets_list[index - 1] = EMPTY;
 
     return bullet;
 }
 
 void stack_push(BulletStack *stack, BulletKind bullet) {
-    assert(stack->size != stack->max_size);
+    assert(stack->size != MAX_B_STACK_SIZE);
 
     stack->size++;
-    stack->bullets[stack->size] = bullet;
+    stack->bullets_list[stack->size] = bullet;
 }
 
 bool stack_is_empty(BulletStack *stack) { return stack->size == 0; }
 
 void stack_print(BulletStack *stack) {
-    printf("Size: %d (Max: %d)\n", stack->size, stack->max_size);
-
-    const int max_size = stack->max_size;
+    printf("@---@\n");
+    printf("Size: %d (Max: %d)\n", stack->size, MAX_B_STACK_SIZE);
 
     int i = 0;
     for (; i < stack->size; i++) {
-        switch (stack->bullets[i]) {
+        switch (stack->bullets_list[i]) {
         case LIVE:
-            printf("%d. live bullet\n", max_size - i);
+            printf("%d. live bullet\n", MAX_B_STACK_SIZE - i);
             break;
         case BLANK:
-            printf("%d. blank\n", max_size - i);
+            printf("%d. blank\n", MAX_B_STACK_SIZE - i);
             break;
         case EMPTY:
-            printf("empty at %d, this shouldn't be happening!\n", max_size - i);
+            printf("empty at %d, this shouldn't be happening!\n", MAX_B_STACK_SIZE);
             break;
         }
     }
 
-    if (stack->size != stack->max_size) {
+    if (stack->size != MAX_B_STACK_SIZE) {
         printf("---\n");
     }
 
-    for (; i < stack->max_size; i++) {
-        switch (stack->bullets[i]) {
+    for (; i < MAX_B_STACK_SIZE; i++) {
+        switch (stack->bullets_list[i]) {
         case LIVE:
         case BLANK:
             printf("live or blank bullet at %d, this shouldn't be happening!\n",
-                   max_size - i);
+                   MAX_B_STACK_SIZE - i);
             break;
         case EMPTY:
-            printf("%d. empty spot\n", max_size - i);
+            printf("%d. empty spot\n", MAX_B_STACK_SIZE);
             break;
         }
     }
+    printf("#---#\n");
 }

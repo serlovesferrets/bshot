@@ -5,6 +5,6 @@ Code for the Arduino project that's supposed to create a gameplay loop similar t
 ## Todos
 
 - [x] Bullets extraction logic
-- [ ] Lives logic
+- [x] Lives logic
 - [ ] Game loop
 - [ ] Other niceties

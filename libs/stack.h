@@ -1,17 +1,16 @@
 #include "bullet_kind.h"
 #include <stdbool.h>
 
-#define MAX_STACK_SIZE 6
+// The max size of the stack which contains the bullets.
+#define MAX_B_STACK_SIZE 6
 
 // A stack of bullets.
 typedef struct {
-  // The actual size of the stack, also the element that's going to get popped.
-  int size;
-  /** The highest size the stack can have, since this data structure is supposed
-   * to be reusable in the same program. */
-  int max_size;
-  // The bullets inside the stack.
-  BulletKind *bullets;
+    // The actual size of the stack, also the element that's going to get
+    // popped.
+    int size;
+    // The bullets inside the stack.
+    BulletKind bullets_list[MAX_B_STACK_SIZE];
 } BulletStack;
 
 // Initialize a stack with only `EMPTY` bullets, of `size` 0.
